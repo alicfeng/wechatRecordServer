@@ -3,7 +3,7 @@
  * Created by AlicFeng at 2019-01-31 16:56
  */
 
-namespace App\Repositories;
+namespace App\Repository;
 
 use App\Common\Database\MySQL\TNS;
 use App\Common\Database\RedisKey;

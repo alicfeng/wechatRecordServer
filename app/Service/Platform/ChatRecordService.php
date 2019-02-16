@@ -9,8 +9,8 @@ namespace App\Service\Platform;
 use App\Common\Database\RedisKey;
 use App\Common\Factory\SamegoRedis;
 use App\Enums\CodeEnum;
-use App\Queue\WechatMessageMonitorJob;
-use App\Repositories\ChatRecordRepository;
+use App\Job\WechatMessageSyncJob;
+use App\Repository\ChatRecordRepository;
 use App\Service\BasicService;
 
 class ChatRecordService extends BasicService
@@ -38,7 +38,7 @@ class ChatRecordService extends BasicService
      */
     public function syncQueue(int $interface, string $username, array $message)
     {
-        WechatMessageMonitorJob::dispatch($interface, $username, $message);
+        WechatMessageSyncJob::dispatch($interface, $username, $message);
         return $this->result(CodeEnum::SUCCESS);
     }
 

@@ -2,10 +2,11 @@
 
 namespace App\Model\WechatRecord;
 
+use App\Common\Database\MySQL\TNS;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
-    protected $table = 'o_wechat_message';
-    public static $tableName = 'o_wechat_message';
+    protected $table = TNS::O_WECHAT_MESSAGE;
+    public static $tableName = TNS::O_WECHAT_MESSAGE;
 }

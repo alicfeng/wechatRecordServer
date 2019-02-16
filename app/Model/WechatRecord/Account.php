@@ -6,6 +6,7 @@
 namespace App\Model\WechatRecord;
 
 
+use App\Common\Database\MySQL\TNS;
 use App\Model\BaseModel;
 
 /**
@@ -15,5 +16,5 @@ use App\Model\BaseModel;
  */
 class Account extends BaseModel
 {
-    protected $table = 'o_wechat_account';
+    protected $table = TNS::O_WECHAT_ACCOUNT;
 }

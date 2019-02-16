@@ -8,8 +8,8 @@ namespace App\Http\Controllers;
 
 use App\Common\Application;
 use App\Common\Constant;
-use App\Http\Response\BasicResponse;
-use App\Http\Response\ResponseCode;
+use App\Enums\CodeEnum;
+use App\Helper\ResponseHelper;
 use Illuminate\Http\Request;
 use Log;
 
@@ -41,7 +41,8 @@ class BaseController extends Controller
                 return $message[$parameterKey] ?? null;
             } else {
                 if (!array_key_exists($parameterKey, $message)) {
-                    exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, DIRECTORY_SEPARATOR . Constant::REQUEST_PACKET_CONSTRUCT_BODY_NAME . DIRECTORY_SEPARATOR . $parameterKey));
+                    exit(ResponseHelper::generate(CodeEnum::MISS_PARAM[0],CodeEnum::MISS_PARAM[1], DIRECTORY_SEPARATOR . Constant::REQUEST_PACKET_CONSTRUCT_HEADER_NAME . DIRECTORY_SEPARATOR . Constant::USER_TOKEN_NAME));
+
                 }
                 return $message[$parameterKey];
             }
@@ -49,7 +50,7 @@ class BaseController extends Controller
         }
         catch (\Exception $exception) {
             Log::error($exception);
-            exit(BasicResponse::basicResponse(ResponseCode::DO_FAILED));
+            exit(ResponseHelper::generate(CodeEnum::FAIL[0],CodeEnum::FAIL[1]));
         }
     }
 
@@ -63,14 +64,14 @@ class BaseController extends Controller
         try {
             $message = $request->post()[Constant::REQUEST_PACKET_CONSTRUCT_HEADER_NAME];
             if (!array_key_exists(Constant::USER_TOKEN_NAME, $message)) {
-                exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, DIRECTORY_SEPARATOR . Constant::REQUEST_PACKET_CONSTRUCT_HEADER_NAME . DIRECTORY_SEPARATOR . Constant::USER_TOKEN_NAME));
+                exit(ResponseHelper::generate(CodeEnum::MISS_PARAM[0],CodeEnum::MISS_PARAM[1], DIRECTORY_SEPARATOR . Constant::REQUEST_PACKET_CONSTRUCT_HEADER_NAME . DIRECTORY_SEPARATOR . Constant::USER_TOKEN_NAME));
             }
             return $request[Constant::USER_TOKEN_TRANSFORM_USER_ID_SIGN];
 
         }
         catch (\Exception $exception) {
             Log::error($exception);
-            exit(BasicResponse::basicResponse(ResponseCode::DO_FAILED));
+            exit(ResponseHelper::generate(CodeEnum::FAIL[0],CodeEnum::FAIL[1]));
         }
     }
 
@@ -88,13 +89,13 @@ class BaseController extends Controller
         try {
             $value = $request->get($parameterKey);
             if (!$allowEmpty && null == $value) {
-                exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, $parameterKey));
+                exit(ResponseHelper::generate(CodeEnum::MISS_PARAM[0],CodeEnum::MISS_PARAM[1], DIRECTORY_SEPARATOR . Constant::REQUEST_PACKET_CONSTRUCT_HEADER_NAME . DIRECTORY_SEPARATOR . Constant::USER_TOKEN_NAME));
             }
             return (null != $default && null == $value) ? $default : $value;
         }
         catch (\Exception $exception) {
             Log::error($exception);
-            exit(BasicResponse::basicResponse(ResponseCode::DO_FAILED));
+            exit(ResponseHelper::generate(CodeEnum::FAIL[0],CodeEnum::FAIL[1]));
         }
     }
 }

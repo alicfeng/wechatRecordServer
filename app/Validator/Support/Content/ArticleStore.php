@@ -24,7 +24,7 @@ class ArticleStore extends BaseRuleStore implements SupportIF
     {
         return [
             /*文章详情接口*/
-            InterfaceAlias::WBS_ARTICLE_DETAIL => [
+            InterfaceAlias::SIMPLE => [
                 $ruleFiled      => [
                     'id' => 'required|integer|min:1'
                 ],

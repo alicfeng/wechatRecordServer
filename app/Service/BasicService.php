@@ -6,9 +6,8 @@
 namespace App\Service;
 
 
+use App\Enums\CodeEnum;
 use App\Helper\ResponseHelper;
-use App\Http\Response\BasicResponse;
-use App\Http\Response\ResponseCode;
 use Illuminate\Http\Request;
 
 class BasicService
@@ -23,7 +22,7 @@ class BasicService
     {
         $message = $request->post()['body'];
         if (!array_key_exists($name, $message)) {
-            exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, '/body/' . $name));
+            exit($this->result(CodeEnum::MISS_PARAM));
         }
         return $message[$name];
     }
@@ -38,7 +37,7 @@ class BasicService
     {
         $message = $request->post();
         if (!array_key_exists($name, $message)) {
-            exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, '/' . $name));
+            exit($this->result(CodeEnum::MISS_PARAM));
         }
         return $message[$name];
     }
@@ -56,7 +55,7 @@ class BasicService
         for ($index = 0; $index < count($paths); $index++) {
             if (is_array($value)) {
                 if (!array_key_exists($paths[$index], $value)) {
-                    exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, $path));
+                    exit($this->result(CodeEnum::MISS_PARAM));
                 }
                 $value = $value[$paths[$index]];
             }
@@ -74,13 +73,13 @@ class BasicService
     {
         $value = $request->get($name);
         if (!$value) {
-            exit(BasicResponse::basicResponse(ResponseCode::Missing_Param, '/body/' . $name));
+            exit($this->result(CodeEnum::MISS_PARAM));
         }
         return $value;
     }
 
     public function result(array $codeEnum, $data = '', bool $logFlag = true, $format = ResponseHelper::FORMAT_JSON)
     {
-        return ResponseHelper::generate($codeEnum[0], $codeEnum[1], $data, $logFlag,$format);
+        return ResponseHelper::generate($codeEnum[0], $codeEnum[1], $data, $logFlag, $format);
     }
 }

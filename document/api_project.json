@@ -1,0 +1,1 @@
+{  "name": "微信监控api文档",  "version": "0.1.1",  "description": "接口文档以及设计说明",  "title": "微信监控 API文档",  "url": "127.0.0.1:8084/",  "sampleUrl": "127.0.0.1:8084/",  "defaultVersion": "0.0.0",  "apidoc": "0.3.0",  "generator": {    "name": "apidoc",    "time": "2019-02-16T09:18:20.771Z",    "url": "http://apidocjs.com",    "version": "0.17.7"  }}

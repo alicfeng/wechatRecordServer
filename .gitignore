@@ -11,7 +11,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
-public/slog/slog.php
-public/slog/slog.function.php
 version
 app/Console/Commands/AlicTest.php
