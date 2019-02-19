@@ -50,6 +50,7 @@ class ChatRecordService extends BasicService
      */
     public function syncHandler(int $interface, string $username, array $message)
     {
+        if ("" == $username) return;
         // 对点刷新软件状态
         $this->chatRecordRepository->online($username);
         switch ($interface) {
@@ -77,11 +78,11 @@ class ChatRecordService extends BasicService
         $accountList = $accountList ? $accountList->toArray() : [];
 
         foreach ($accountList as &$account) {
-            $cacheStatus = SamegoRedis::getRedis()->get(
+            $cacheStatus       = SamegoRedis::getRedis()->get(
                 RedisKey::OPERATION_WECHAT_MONITOR_ONLINE_PRE
                 . $account['username']
             );
-            $account['online'] = (boolean) $cacheStatus;
+            $account['online'] = (boolean)$cacheStatus;
         }
 
         return $this->result(CodeEnum::SUCCESS, $accountList);
@@ -117,8 +118,8 @@ class ChatRecordService extends BasicService
             }*/ elseif ($record['type'] === 43) {
                 // 小视频
                 $record['content'] = '<video controls>'
-                    . '<source src="' . $record['content'] . '" type="video/mp4">'
-                    . '</video>';
+                                     . '<source src="' . $record['content'] . '" type="video/mp4">'
+                                     . '</video>';
             }
         }
 
@@ -136,11 +137,11 @@ class ChatRecordService extends BasicService
 
         $resMap = [];
         foreach ($accountList as $account) {
-            $cacheStatus = SamegoRedis::getRedis()->get(
+            $cacheStatus                  = SamegoRedis::getRedis()->get(
                 RedisKey::OPERATION_WECHAT_MONITOR_ONLINE_PRE
                 . $account['username']
             );
-            $resMap[$account['username']] = (boolean) $cacheStatus;
+            $resMap[$account['username']] = (boolean)$cacheStatus;
         }
 
         return $this->result(CodeEnum::SUCCESS, $resMap);
