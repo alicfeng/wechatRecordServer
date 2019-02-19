@@ -17,7 +17,7 @@ use Log;
 class WechatMessageSyncJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public    $tries = 3;
+    public    $tries = 5;
     protected $interface;
     protected $username;
     protected $message;
