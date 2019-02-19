@@ -12,6 +12,7 @@ use App\Enums\CodeEnum;
 use App\Job\WechatMessageSyncJob;
 use App\Repository\ChatRecordRepository;
 use App\Service\BasicService;
+use Log;
 
 class ChatRecordService extends BasicService
 {
@@ -165,6 +166,10 @@ class ChatRecordService extends BasicService
     private function handlerContact(string $username, array $message)
     {
         foreach ($message as $contact) {
+            if (!$contact['username'] || !$contact['nickname']) {
+                Log::debug('skipping: ' . json_encode($contact) . 'because of wrong information');
+                continue;
+            }
             $this->chatRecordRepository->syncContact($username, $contact['username'], $contact['nickname']);
         }
     }
