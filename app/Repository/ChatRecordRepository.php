@@ -119,7 +119,9 @@ class ChatRecordRepository
                 )->orWhereNull(Message::$tableName . '.username');
             })
             ->groupBy(
-                Contact::$tableName . '.id'
+                Contact::$tableName . '.id',
+                Contact::$tableName . '.username',
+                Contact::$tableName . '.nickname'
             )
             ->select(
                 Contact::$tableName . '.id',
