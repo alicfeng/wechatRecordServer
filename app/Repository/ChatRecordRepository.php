@@ -118,8 +118,11 @@ class ChatRecordRepository
                     $account
                 )->orWhereNull(Message::$tableName . '.username');
             })
+            ->where('status', 1)
             ->groupBy(
-                Contact::$tableName . '.id'
+                Contact::$tableName . '.id',
+                Contact::$tableName . '.username',
+                Contact::$tableName . '.nickname'
             )
             ->select(
                 Contact::$tableName . '.id',
