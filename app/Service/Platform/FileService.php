@@ -13,7 +13,7 @@ use Log;
 
 class FileService extends BasicService
 {
-    const DOMAIN = 'http://oss.yi-insurance.com/';
+    const DOMAIN = 'http://wechat-monitor-qiniu.samego.com/';
 
     public function upload()
     {
